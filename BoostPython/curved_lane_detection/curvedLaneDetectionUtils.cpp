@@ -58,9 +58,10 @@ public:
 //        }
 //    }
 
-    void setMTX(boost::python::numpy::ndarray np_mtx) {
+    void setMTX(boost::python::numpy::ndarray &np_mtx) {
         const double* data = reinterpret_cast<double *>(np_mtx.get_data()) ;
-        std::cout << data[0] << std::endl;
+        std::cout << "sizeof: " << sizeof(data) << std::endl;
+        std::cout << "initial data: " << data[0] << std::endl;
     }
 
     void setImgSize(const int width, const int height)
