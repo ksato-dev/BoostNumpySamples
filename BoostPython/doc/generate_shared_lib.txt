@@ -1,0 +1,1 @@
+g++ -I /usr/include/python3.6m/ -DPIC -shared -fPIC -o myOpencvModule.so myOpencvModule.cpp -lboost_python3 `pkg-config --cflags --libs opencv`
