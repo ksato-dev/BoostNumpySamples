@@ -8,6 +8,14 @@
 namespace p = boost::python;
 namespace np = boost::python::numpy;
 
+const double get_value_from_2darray(const np::ndarray &array_2dim,
+                              const int x, const int y,
+                              const int stride_x, const int stride_y)
+{
+    return *reinterpret_cast<double *>(
+        array_2dim.get_data() + y * stride_y + x * stride_x);
+}
+
 void extract_curved_points(const np::ndarray &curved_bin_image)
 {
     int nd = curved_bin_image.get_nd();
@@ -22,21 +30,28 @@ void extract_curved_points(const np::ndarray &curved_bin_image)
 
     double *dbl_data = reinterpret_cast<double *>(curved_bin_image.get_data());
 
+    // params of ndarray
     int count = 0;
-    int size_y = curved_bin_image.shape(0);
-    int size_x = curved_bin_image.shape(1);
-    int stride_y = curved_bin_image.get_strides()[0];
-    int stride_x = curved_bin_image.get_strides()[1];
+    const int size_y = curved_bin_image.shape(0);
+    const int size_x = curved_bin_image.shape(1);
+    const int stride_y = curved_bin_image.get_strides()[0];
+    const int stride_x = curved_bin_image.get_strides()[1];
 
+    // extract points per each y-pixels.
     for (int y = 0; y < size_y; y++)
 	    for (int x = 0; x < size_x; x++)
         {
+#if 0
             std::cout << "y:" << y << ", x:" << x 
 		<< ", val:"
                 << *reinterpret_cast<double *>
                 (curved_bin_image.get_data()
                 + y * stride_y + x * stride_x)
                 << std::endl;
+#else
+            const double curr_value = get_value_from_2darray(curved_bin_image, x, y, stride_x, stride_y);
+            std::cout << "(y, x) = (" << y << ", " << x << "), value:" << curr_value << std::endl;
+#endif
             count++;
         }
 
