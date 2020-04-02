@@ -1,3 +1,6 @@
 [submodule "BoostPython/polyfit_lane/CubicSpline"]
 	path = BoostPython/polyfit_lane/CubicSpline
 	url = git@github.com:AtsushiSakai/CubicSpline.git
+[submodule "BoostPython/polyfit_lane/spline"]
+	path = BoostPython/polyfit_lane/spline
+	url = git@github.com:ttk592/spline.git
